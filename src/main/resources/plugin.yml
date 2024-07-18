@@ -1,0 +1,21 @@
+name: TrueStaffMode
+version: '${project.version}'
+main: dev.trueeh.truestaffmode.TrueStaff
+api-version: 1.20
+authors: [ trueeh ]
+commands:
+  v:
+
+    aliases: [vanish]
+
+  staff:
+
+    aliases: mod
+
+  freeze:
+
+    aliases: f
+
+  setfreeze:
+
+  freezeinfo:
