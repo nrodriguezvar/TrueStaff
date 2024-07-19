@@ -1,41 +1,39 @@
-package dev.trueeh.truestaffmode.commands;
+package dev.trueeh.truestaffmode.Modules.Vanish.Commands;
 
-import dev.trueeh.truestaffmode.Managers.FreezeManager;
+import dev.trueeh.truestaffmode.Modules.Vanish.Managers.VanishManager;
 import dev.trueeh.truestaffmode.model.ICommand;
-import dev.trueeh.truestaffmode.utils.ColorUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SetFreezeRoomCommand implements CommandExecutor, ICommand {
 
-    FreezeManager manager;
+public class VanishCommand implements CommandExecutor, ICommand {
+    VanishManager manager;
     private boolean isEnabled = true;
-    public SetFreezeRoomCommand(FreezeManager manager){
+    public VanishCommand(VanishManager manager){
         this.manager = manager;
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if(sender instanceof Player){
+        if(sender instanceof Player) {
             Player player = (Player) sender;
+
             if(shouldExecute(player)){
-                if(manager.isFreezeLocationSet()){
-                    player.sendMessage(ColorUtils.colorize("&bChanged freeze room location!"));
-                    manager.setFreezeLocation(player.getLocation());
+                if(manager.isVanished(player)){
+                    manager.disableVanish(player);
                 } else {
-                    player.sendMessage(ColorUtils.colorize("&aNew freeze room set!"));
-                    manager.setFreezeLocation(player.getLocation());
+                    manager.enableVanish(player);
                 }
             }
+
         }
         return true;
     }
 
     @Override
     public String getPermission() {
-        return "truestaff.admin";
+        return "truestaff.staff";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package dev.trueeh.truestaffmode.Managers;
+package dev.trueeh.truestaffmode.Modules.Freeze.Managers;
 
 import dev.trueeh.truestaffmode.File.impl.YamlFile;
 import dev.trueeh.truestaffmode.TrueStaff;
@@ -71,7 +71,6 @@ public class FreezeManager {
             player.sendMessage(ColorUtils.colorize("&cFreeze Room is not set!"));
             return;
         }
-
 
         if(!isFrozen(player)){
             lastestGamemode = player.getGameMode();

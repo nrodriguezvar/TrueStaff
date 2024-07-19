@@ -1,4 +1,4 @@
-package dev.trueeh.truestaffmode.Managers;
+package dev.trueeh.truestaffmode.Modules.Vanish.Managers;
 
 import dev.trueeh.truestaffmode.TrueStaff;
 import dev.trueeh.truestaffmode.utils.ColorUtils;
@@ -18,7 +18,7 @@ public class VanishManager {
             }
         }
         vanishedPlayers.add(player.getUniqueId());
-        player.sendMessage(ColorUtils.colorize("&aVanish activado"));
+        player.sendMessage(ColorUtils.colorize("&8&l[&f&lVanish&8&l] &7Activado"));
     }
 
     public void disableVanish(Player player){
@@ -26,7 +26,7 @@ public class VanishManager {
             onlinePlayer.showPlayer(player);
         }
         vanishedPlayers.remove(player.getUniqueId());
-        player.sendMessage(ColorUtils.colorize("&c Vanish desactivado"));
+        player.sendMessage(ColorUtils.colorize("&8&l[&f&lVanish&8&l] &7Desactivado"));
     }
 
     public boolean isVanished(Player player){

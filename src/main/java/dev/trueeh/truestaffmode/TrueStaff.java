@@ -1,33 +1,62 @@
 package dev.trueeh.truestaffmode;
 
-import dev.trueeh.truestaffmode.commands.*;
+import dev.trueeh.truestaffmode.Modules.StaffMode.Commands.StaffChatCommand;
+import dev.trueeh.truestaffmode.Modules.StaffMode.Listeners.StaffChatListener;
+import dev.trueeh.truestaffmode.Modules.StaffMode.Listeners.StaffListListener;
+import dev.trueeh.truestaffmode.Modules.Freeze.Commands.FreezeCommand;
+import dev.trueeh.truestaffmode.Modules.Freeze.Commands.FreezeInfo;
+import dev.trueeh.truestaffmode.Modules.Freeze.Commands.SetFreezeRoomCommand;
+import dev.trueeh.truestaffmode.Modules.StaffMode.Commands.StaffCommand;
+import dev.trueeh.truestaffmode.Modules.StaffMode.Commands.StaffListCommand;
+import dev.trueeh.truestaffmode.Modules.StaffMode.Listeners.StaffModeListener;
+import dev.trueeh.truestaffmode.Modules.Vanish.Commands.VanishCommand;
 import dev.trueeh.truestaffmode.File.FileManager;
-import dev.trueeh.truestaffmode.Listeners.FreezeListener;
-import dev.trueeh.truestaffmode.Listeners.VanishListener;
-import dev.trueeh.truestaffmode.Managers.FreezeManager;
-import dev.trueeh.truestaffmode.Managers.StaffModeManager;
-import dev.trueeh.truestaffmode.Managers.VanishManager;
+import dev.trueeh.truestaffmode.Modules.Freeze.Listeners.FreezeListener;
+import dev.trueeh.truestaffmode.Modules.Vanish.Listeners.VanishListener;
+import dev.trueeh.truestaffmode.Modules.Freeze.Managers.FreezeManager;
+import dev.trueeh.truestaffmode.Modules.StaffMode.Managers.StaffModeManager;
+import dev.trueeh.truestaffmode.Modules.Vanish.Managers.VanishManager;
+import dev.trueeh.truestaffmode.gui.SimpleGuiManager;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TrueStaff extends JavaPlugin {
 
+    private static TrueStaff instance;
+
     private static final String STAFF_PERMISSION = "truestaff.staff";
     private static final String ADMIN_PERMISSION = "truestaff.admin";
-    VanishManager vanishManager = new VanishManager();
-    StaffModeManager staffCommandManager = new StaffModeManager();
-    FreezeManager freezeManager = new FreezeManager(this);
+
+    @Getter VanishManager vanishManager;
+    @Getter StaffModeManager staffModeManager;
+    @Getter FreezeManager freezeManager;
+    @Getter SimpleGuiManager simpleGuiManager;
     FileManager fileManager;
+
     @Override
     public void onEnable() {
+        instance = this;
+
+        vanishManager = new VanishManager();
+        staffModeManager = new StaffModeManager();
+        freezeManager = new FreezeManager(this);
+        simpleGuiManager = new SimpleGuiManager();
+        fileManager = new FileManager(this);
+
         getCommand("v").setExecutor(new VanishCommand(vanishManager));
-        getCommand("staff").setExecutor(new StaffCommand(staffCommandManager));
+        getCommand("staff").setExecutor(new StaffCommand(staffModeManager));
         getCommand("freeze").setExecutor(new FreezeCommand(freezeManager));
         getCommand("setfreeze").setExecutor(new SetFreezeRoomCommand(freezeManager));
         getCommand("freezeinfo").setExecutor(new FreezeInfo(freezeManager));
+        getCommand("stafflist").setExecutor(new StaffListCommand(staffModeManager, vanishManager, simpleGuiManager));
+        getCommand("staffchat").setExecutor(new StaffChatCommand(staffModeManager));
 
-        Bukkit.getPluginManager().registerEvents(new VanishListener(vanishManager, staffCommandManager), this);
-        Bukkit.getPluginManager().registerEvents(new FreezeListener(freezeManager), this);
+        Bukkit.getPluginManager().registerEvents(new VanishListener(vanishManager, staffModeManager), this);
+        Bukkit.getPluginManager().registerEvents(new FreezeListener(freezeManager, staffModeManager), this);
+        Bukkit.getPluginManager().registerEvents(new StaffListListener(vanishManager, staffModeManager, simpleGuiManager), this);
+        Bukkit.getPluginManager().registerEvents(new StaffModeListener(staffModeManager), this);
+        Bukkit.getPluginManager().registerEvents(new StaffChatListener(staffModeManager), this);
 
         this.fileManager = new FileManager(this);
     }
@@ -37,11 +66,19 @@ public final class TrueStaff extends JavaPlugin {
         // Plugin shutdown logic
     }
 
+    public void registerManagers(){
+        //plantilla de managers
+    }
+
     public static String getStaffPermission() {
         return STAFF_PERMISSION;
     }
 
     public static String getAdminPermission() {
         return ADMIN_PERMISSION;
+    }
+
+    public static TrueStaff getInstance() {
+        return instance;
     }
 }

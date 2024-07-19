@@ -19,3 +19,11 @@ commands:
   setfreeze:
 
   freezeinfo:
+
+  stafflist:
+
+    aliases: sl
+
+  staffchat:
+
+    aliases: sc

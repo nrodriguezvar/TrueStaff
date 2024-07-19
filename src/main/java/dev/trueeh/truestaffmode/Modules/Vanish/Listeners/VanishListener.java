@@ -1,7 +1,7 @@
-package dev.trueeh.truestaffmode.Listeners;
+package dev.trueeh.truestaffmode.Modules.Vanish.Listeners;
 
-import dev.trueeh.truestaffmode.Managers.StaffModeManager;
-import dev.trueeh.truestaffmode.Managers.VanishManager;
+import dev.trueeh.truestaffmode.Modules.StaffMode.Managers.StaffModeManager;
+import dev.trueeh.truestaffmode.Modules.Vanish.Managers.VanishManager;
 import dev.trueeh.truestaffmode.TrueStaff;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -26,11 +26,8 @@ public class VanishListener implements Listener {
     @EventHandler
     private void handleJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
-        if(player.hasPermission(TrueStaff.getStaffPermission())) return;
-
-        for (UUID vanishedPlayer : vanishManager.getVanishedPlayers()) {
-            player.hidePlayer(Bukkit.getPlayer(vanishedPlayer));
+        if(player.hasPermission(TrueStaff.getStaffPermission())){
+            vanishManager.enableVanish(player);
         }
     }
 
@@ -40,7 +37,7 @@ public class VanishListener implements Listener {
 
         if(player.hasPermission(TrueStaff.getStaffPermission())){
             if(vanishManager.isVanished(player)){
-                vanishManager.getVanishedPlayers().remove(player);
+                vanishManager.disableVanish(player);
             }
         }
     }

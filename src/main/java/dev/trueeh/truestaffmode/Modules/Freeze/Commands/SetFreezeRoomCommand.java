@@ -1,30 +1,32 @@
-package dev.trueeh.truestaffmode.commands;
+package dev.trueeh.truestaffmode.Modules.Freeze.Commands;
 
-import dev.trueeh.truestaffmode.Managers.StaffModeManager;
+import dev.trueeh.truestaffmode.Modules.Freeze.Managers.FreezeManager;
 import dev.trueeh.truestaffmode.model.ICommand;
+import dev.trueeh.truestaffmode.utils.ColorUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class StaffCommand implements CommandExecutor, ICommand {
+public class SetFreezeRoomCommand implements CommandExecutor, ICommand {
 
-    StaffModeManager manager;
+    FreezeManager manager;
     private boolean isEnabled = true;
-    public StaffCommand(StaffModeManager manager){
+    public SetFreezeRoomCommand(FreezeManager manager){
         this.manager = manager;
     }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         if(sender instanceof Player){
             Player player = (Player) sender;
-
             if(shouldExecute(player)){
-                if(manager.isInStaffMode(player)){
-                    manager.disableStaffMode(player);
+                if(manager.isFreezeLocationSet()){
+                    player.sendMessage(ColorUtils.colorize("&bChanged freeze room location!"));
+                    manager.setFreezeLocation(player.getLocation());
                 } else {
-                    manager.enableStaffMode(player);
+                    player.sendMessage(ColorUtils.colorize("&aNew freeze room set!"));
+                    manager.setFreezeLocation(player.getLocation());
                 }
             }
         }
@@ -33,7 +35,7 @@ public class StaffCommand implements CommandExecutor, ICommand {
 
     @Override
     public String getPermission() {
-        return "truestaff.staff";
+        return "truestaff.admin";
     }
 
     @Override

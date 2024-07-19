@@ -1,6 +1,6 @@
-package dev.trueeh.truestaffmode.commands;
+package dev.trueeh.truestaffmode.Modules.Freeze.Commands;
 
-import dev.trueeh.truestaffmode.Managers.FreezeManager;
+import dev.trueeh.truestaffmode.Modules.Freeze.Managers.FreezeManager;
 import dev.trueeh.truestaffmode.model.ICommand;
 import dev.trueeh.truestaffmode.utils.ColorUtils;
 import org.bukkit.Bukkit;
