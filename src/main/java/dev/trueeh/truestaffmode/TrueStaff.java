@@ -1,7 +1,6 @@
 package dev.trueeh.truestaffmode;
 
 import dev.trueeh.truestaffmode.Modules.StaffMode.Commands.StaffChatCommand;
-import dev.trueeh.truestaffmode.Modules.StaffMode.Listeners.PatrolListener;
 import dev.trueeh.truestaffmode.Modules.StaffMode.Listeners.StaffChatListener;
 import dev.trueeh.truestaffmode.Modules.StaffMode.Listeners.StaffListListener;
 import dev.trueeh.truestaffmode.Modules.Freeze.Commands.FreezeCommand;
@@ -18,7 +17,6 @@ import dev.trueeh.truestaffmode.Modules.Freeze.Managers.FreezeManager;
 import dev.trueeh.truestaffmode.Modules.StaffMode.Managers.StaffModeManager;
 import dev.trueeh.truestaffmode.Modules.Vanish.Managers.VanishManager;
 import dev.trueeh.truestaffmode.gui.SimpleGuiManager;
-import dev.trueeh.truestaffmode.utils.ColorUtils;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -59,7 +57,6 @@ public final class TrueStaff extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new StaffListListener(vanishManager, staffModeManager, simpleGuiManager), this);
         Bukkit.getPluginManager().registerEvents(new StaffModeListener(staffModeManager), this);
         Bukkit.getPluginManager().registerEvents(new StaffChatListener(staffModeManager), this);
-        Bukkit.getPluginManager().registerEvents(new PatrolListener(staffModeManager), this);
 
         this.fileManager = new FileManager(this);
     }
@@ -83,9 +80,5 @@ public final class TrueStaff extends JavaPlugin {
 
     public static TrueStaff getInstance() {
         return instance;
-    }
-
-    public static String getNoPermission(){
-        return ColorUtils.colorize("&cYou dont have permission.");
     }
 }

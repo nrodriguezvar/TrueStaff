@@ -24,14 +24,14 @@ public class StaffListListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     private void onInventoryClick(InventoryClickEvent event) {
         if(event.getClickedInventory() == null) return;
-        if(event.getView().getTitle().contains("Staffs Online")){
+        if(event.getView().getTitle().contains("Staff List (")){
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     private void onInventoryDrag(InventoryDragEvent event) {
-        if(event.getView().getTitle().contains("Staffs Online")) {
+        if(event.getView().getTitle().contains("Staff List (")) {
             event.setCancelled(true);
         }
     }

@@ -88,10 +88,9 @@ public class StaffListGui implements SimpleGUI {
 
         lore.add(ColorUtils.colorize("&eInformation"));
         lore.add(ColorUtils.colorize(""));
-        lore.add(ColorUtils.colorize(staffModeManager.isInStaffMode(player) ? "&eStaffMode: &aOn" : "&eStaffMode: &cOff"));
-        lore.add(ColorUtils.colorize("&eGamemode: &c" + player.getGameMode())); //need capitalize
-        lore.add(ColorUtils.colorize(vanishManager.isVanished(player) ? "&eVanished: &aTrue" : "&eVanished: &cFalse"));
-        lore.add(ColorUtils.colorize(staffModeManager.isInStaffChat(player) ? "&eStaffChat: &aOn" : "&eStaffChat: &cOff"));
+        lore.add(ColorUtils.colorize(staffModeManager.isInStaffMode(player) ? "&eStaffMode: &aON" : "&eStaffMode: &cOFF"));
+        lore.add(ColorUtils.colorize("&eGamemode: &c" + player.getGameMode()));
+        lore.add(ColorUtils.colorize(vanishManager.isVanished(player) ? "&eVanished: &aTRUE" : "&eVanished: &cFALSE"));
 
         return lore;
     }

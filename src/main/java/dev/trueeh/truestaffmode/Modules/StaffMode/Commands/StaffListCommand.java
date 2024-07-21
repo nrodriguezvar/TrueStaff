@@ -1,6 +1,5 @@
 package dev.trueeh.truestaffmode.Modules.StaffMode.Commands;
 
-import dev.trueeh.truestaffmode.TrueStaff;
 import dev.trueeh.truestaffmode.gui.Impl.StaffListGui;
 import dev.trueeh.truestaffmode.Modules.Vanish.Managers.VanishManager;
 import dev.trueeh.truestaffmode.Modules.StaffMode.Managers.StaffModeManager;
@@ -29,9 +28,7 @@ public class StaffListCommand implements CommandExecutor, ICommand {
         if(sender instanceof Player){
             Player player = (Player) sender;
             if(shouldExecute(player)){
-                new StaffListGui(staffModeManager, vanishManager).openGui(player);
-            } else {
-                player.sendMessage(TrueStaff.getNoPermission());
+                simpleGuiManager.getGui("gui.stafflist").openGui(player);
             }
         }
         return true;

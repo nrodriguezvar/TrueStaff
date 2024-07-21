@@ -4,17 +4,13 @@ import dev.trueeh.truestaffmode.TrueStaff;
 import dev.trueeh.truestaffmode.utils.ColorUtils;
 import dev.trueeh.truestaffmode.utils.ItemUtils;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class StaffModeManager {
 
@@ -30,7 +26,7 @@ public class StaffModeManager {
             playersInStaffMode.add(player.getUniqueId());
             inventoryItems = player.getInventory().getContents();
             player.getInventory().clear();
-            player.sendMessage(ColorUtils.colorize("&8&l[&3&lStaffMode&8&l] &3enabled"));
+            player.sendMessage(ColorUtils.colorize("&aStaffMode activado"));
 
 
             staffItems.put(0, itemUtils.createItem(Material.ICE, 1, ColorUtils.colorize("&bFreeze"), null));
@@ -44,9 +40,7 @@ public class StaffModeManager {
                 player.getInventory().setItem(entry.getKey(), entry.getValue());
             }
 
-            player.setCollidable(false);
             player.setGameMode(GameMode.CREATIVE);
-
         }
     }
 
@@ -54,12 +48,10 @@ public class StaffModeManager {
         if(isInStaffMode(player)){
             playersInStaffMode.remove(player.getUniqueId());
             player.getInventory().clear();
-            player.sendMessage(ColorUtils.colorize("&8&l[&3&lStaffMode&8&l]&3 disabled"));
+            player.sendMessage(ColorUtils.colorize("&cStaffMode desactivado"));
             player.getInventory().setContents(inventoryItems);
 
-            player.setCollidable(true);
             player.setGameMode(GameMode.SURVIVAL);
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ColorUtils.colorize("")));
         }
     }
 
