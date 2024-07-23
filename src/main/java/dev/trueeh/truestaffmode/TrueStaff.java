@@ -1,5 +1,8 @@
 package dev.trueeh.truestaffmode;
 
+import dev.trueeh.truestaffmode.Modules.Alerts.Commands.XrayAlertsCommand;
+import dev.trueeh.truestaffmode.Modules.Alerts.Listeners.XrayListener;
+import dev.trueeh.truestaffmode.Modules.Alerts.Managers.XrayManager;
 import dev.trueeh.truestaffmode.Modules.StaffMode.Commands.StaffChatCommand;
 import dev.trueeh.truestaffmode.Modules.StaffMode.Listeners.PatrolListener;
 import dev.trueeh.truestaffmode.Modules.StaffMode.Listeners.StaffChatListener;
@@ -33,6 +36,7 @@ public final class TrueStaff extends JavaPlugin {
     @Getter VanishManager vanishManager;
     @Getter StaffModeManager staffModeManager;
     @Getter FreezeManager freezeManager;
+    @Getter XrayManager xrayManager;
     @Getter SimpleGuiManager simpleGuiManager;
     FileManager fileManager;
 
@@ -40,9 +44,12 @@ public final class TrueStaff extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        this.fileManager = new FileManager(this);
+
         vanishManager = new VanishManager();
         staffModeManager = new StaffModeManager();
         freezeManager = new FreezeManager(this);
+        xrayManager = new XrayManager(this, fileManager);
         simpleGuiManager = new SimpleGuiManager();
         fileManager = new FileManager(this);
 
@@ -53,6 +60,7 @@ public final class TrueStaff extends JavaPlugin {
         getCommand("freezeinfo").setExecutor(new FreezeInfo(freezeManager));
         getCommand("stafflist").setExecutor(new StaffListCommand(staffModeManager, vanishManager, simpleGuiManager));
         getCommand("staffchat").setExecutor(new StaffChatCommand(staffModeManager));
+        getCommand("xray").setExecutor(new XrayAlertsCommand(xrayManager));
 
         Bukkit.getPluginManager().registerEvents(new VanishListener(vanishManager, staffModeManager), this);
         Bukkit.getPluginManager().registerEvents(new FreezeListener(freezeManager, staffModeManager), this);
@@ -60,8 +68,8 @@ public final class TrueStaff extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new StaffModeListener(staffModeManager), this);
         Bukkit.getPluginManager().registerEvents(new StaffChatListener(staffModeManager), this);
         Bukkit.getPluginManager().registerEvents(new PatrolListener(staffModeManager), this);
+        Bukkit.getPluginManager().registerEvents(new XrayListener(xrayManager), this);
 
-        this.fileManager = new FileManager(this);
     }
 
     @Override

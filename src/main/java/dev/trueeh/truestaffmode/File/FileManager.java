@@ -11,7 +11,8 @@ public class FileManager {
 
     public FileManager(final TrueStaff trueStaffMode){
         this.loadedFiles = Arrays.asList(
-                new YamlFile("locations/freeze.yml", trueStaffMode)
+                new YamlFile("locations/freeze.yml", trueStaffMode),
+                new YamlFile("alert_blocks.yml", trueStaffMode)
         );
     }
 

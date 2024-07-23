@@ -27,3 +27,5 @@ commands:
   staffchat:
 
     aliases: sc
+
+  xray:
